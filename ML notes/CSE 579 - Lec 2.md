@@ -84,3 +84,41 @@ The Goal of Reinforcement Learning is to the paramaters by policy by theta
 
 Our policy by theta is gonna try and maximize the expectation over the sum of rewards in any trajectory
 
+# Main things to learn - Policies
+## Gaussian Policy
+Used for continuous action spaces.
+
+The policy outputs the mean μ(s) and covariance Σ(s) of a Gaussian distribution over actions for a given state s.
+
+Common in policy gradient methods like PPO or TRPO.
+
+Action: a ~ N(μ(s), Σ(s))
+
+## Categorical Policy
+Used for discrete action spaces.
+
+The policy outputs a probability for each possible action p₁(s), p₂(s), ..., pₖ(s).
+
+Action: sample from the categorical distribution defined by those probabilities.
+
+Example: a ~ Cat(p₁(s), ..., pₖ(s))
+
+## Mixture of Gaussians
+A more flexible version of the Gaussian policy.
+
+Outputs N different Gaussians each with their own parameters (μᵢ(s), Σᵢ(s)) and associated weights wᵢ.
+
+Captures multi-modal action distributions (e.g., when multiple distinct strategies could work).
+
+Action: sampled from the weighted mixture of Gaussians.
+
+## Diffusion Policy
+A recent innovation, especially useful in high-dimensional or structured action spaces.
+
+Instead of directly parameterizing a distribution, it models the action distribution as the solution to a diffusion process (like a learned denoising process).
+
+Based on score-based models (e.g., from generative modeling literature like diffusion models).
+
+The gradient shown: ∇ₐ log π(a|s) is a score function, indicating how much to adjust action a to increase its likelihood under π.
+
+
