@@ -122,3 +122,83 @@ Based on score-based models (e.g., from generative modeling literature like diff
 The gradient shown: ∇ₐ log π(a|s) is a score function, indicating how much to adjust action a to increase its likelihood under π.
 
 
+Easier to code and easier to debug the Guassians
+
+To sample from a Diffusion Policy you have to reverse the fusion process so it is much slower and harder to train, though it is getting better now
+
+
+## Imitation Learning
+- Use expert demonstrations
+- Learn policy from (s, a) pairs
+
+### Pros
+- No reward engineering
+- Easy to specify tasks
+
+### Cons
+- Needs expert data
+- No learning post-deployment
+
+---
+
+## Behavior Cloning (BC)
+- Supervised learning on expert (s, a) pairs
+- Maximizes log likelihood:
+```math
+argmax_θ ∑ log π_θ(a|s)
+```
+
+---
+
+## BC Limitations
+### Compounding Error
+- Mistakes accumulate over time
+- Error grows with time horizon
+
+### Underfitting
+- Expert policy may be multimodal
+- Gaussian/categorical may average modes
+
+---
+
+## Distribution Expressivity
+- **Categorical**: For discrete actions
+- **Gaussian**: For continuous actions
+- **Mixture of Gaussians**: More flexible
+- **Diffusion Models**: High-dimensional/multimodal
+
+---
+
+## Divergence Objectives
+- **Forward KL** (used in BC): mode-averaging
+- **Reverse KL**: mode-seeking
+- **f-divergence** framework: generalizes both
+
+---
+
+## Addressing Expressivity
+- Mix. of Gaussians
+- Latent Variable Models
+- Autoregressive Discretization
+- Diffusion Models
+
+---
+
+## Fixing Compounding Error
+### DAgger (2011)
+- Dataset aggregation
+- Get expert corrections during rollout
+
+### DART (2017)
+- Inject noise into expert to improve robustness
+
+### CCIL
+- Model dynamics
+- Relabel near-expert states using dynamics model
+
+---
+
+## Diffusion Policy Details
+- Models action as denoising process
+- Uses ∇ₐ log π(a|s) as score function
+- Accurate but expensive to sample
